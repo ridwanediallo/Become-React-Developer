@@ -6,6 +6,15 @@ import AppointmentInfo from './components/AppointmentInfo';
 
 function App() {
   const [appointmentList, setAppointmentList] = useState([]);
+  const [query, setQuery] = useState('');
+
+  const filteredAppointments = appointmentList.filter(item => {
+    return (
+      item.petName.toLowerCase().includes(query.toLowerCase()) ||
+      item.ownerName.toLowerCase().includes(query.toLowerCase()) ||
+      item.aptNotes.toLowerCase().includes(query.toLowerCase()) 
+    )
+  })
 
   const fetchData = useCallback(() => {
     fetch('./data.json')
@@ -25,11 +34,11 @@ function App() {
         <BiCalendar className="inline-block text-red-400 align-top" />
         Your Appointments
       </h1>
-      <Search />
+      <Search query={query} onQueryChange={myQuery => setQuery(myQuery)}/>
       <AddAppointment />
 
       <ul className="divide-y divide-gray-200">
-        {appointmentList.map((appointment) => (
+        {filteredAppointments.map((appointment) => (
           <AppointmentInfo
             key={appointment.id}
             appointment={appointment}
