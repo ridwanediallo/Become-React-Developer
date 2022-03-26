@@ -43,8 +43,23 @@ function App() {
         <BiCalendar className="inline-block text-red-400 align-top" />
         Your Appointments
       </h1>
-      <Search query={query} onQueryChange={(myQuery) => setQuery(myQuery)}  orderBy={orderBy} onOrderByChange={mySort => setOrderBy(mySort)} sortBy={sortBy} onSortByChange={mySort => setSortBy(mySort)}/>
-      <AddAppointment />
+      <Search
+        query={query}
+        onQueryChange={(myQuery) => setQuery(myQuery)}
+        orderBy={orderBy}
+        onOrderByChange={(mySort) => setOrderBy(mySort)}
+        sortBy={sortBy}
+        onSortByChange={(mySort) => setSortBy(mySort)}
+      />
+      <AddAppointment
+        onSendAppointment={(myAppointment) =>
+          setAppointmentList([...appointmentList, myAppointment])
+        }
+        lastId={appointmentList.reduce(
+          (max, item) => (Number(item.id) > max ? Number(item.id) : max),
+          0
+        )}
+      />
 
       <ul className="divide-y divide-gray-200">
         {filteredAppointments.map((appointment) => (
