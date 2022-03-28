@@ -1,9 +1,9 @@
 import './App.css';
 
-function App() {
+function App(props) {
   return (
     <div className="App">
-       
+
     </div>
   );
 }
