@@ -1,33 +1,32 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
-import { FaStar } from 'react-icons/fa';
 
-const createArray = (length) => [...Array(length)];
-
-function Star({ selected = false, onSelect }) {
-  return <FaStar color={selected ? 'red' : 'gray'} onClick={onSelect} />;
-}
-
-function StarRating({ totalStars = 5 }) {
-  const [selectedStars, setSelectedStars] = useState(0);
-  return (
-    <>
-    {  createArray(totalStars).map((n, i) => (
-      <Star
-        key={i}
-        selected={selectedStars > i}
-        onSelect={() => setSelectedStars(i + 1)}
-      />
-      ))};
-      <p>{selectedStars} of {totalStars} stars</p>
-    </>
-  );
-}
 
 function App() {
-  return <StarRating totalStars={10} />;
+  const [name, setName] = useState('Ridwan');
+  const [data, setData] = useState([]);
+
+
+  useEffect(() => {
+    fetch('https://api.github.com/users')
+    .then((response) => response.json())
+    .then(setData)
+  }, [])
+
+  if (data) {
+    return (
+      <>
+        <ul>
+          {data.map((data) => (
+            <li key={data.id}>{data.login}</li>
+          ))}
+        </ul>
+        <button onClick={() => setData([])}>Remove data</button>
+      </>
+    );
+  }
 }
 
 ReactDOM.render(
@@ -36,3 +35,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+
+
