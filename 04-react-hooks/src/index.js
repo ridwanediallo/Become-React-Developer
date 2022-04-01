@@ -1,56 +1,29 @@
-import React, {createContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {useInput} from './useInput'
 // import App from './App';
+import { useFetch } from './useFetch';
 
-export const TreesContext = createContext();
+function App({login}) {
+   const {loading, data, error} = useFetch(`https://api.github.com/users/${login}`);
+   if (loading) return <h1>loading...</h1>;
+   if(error)
+   return <pre>{JSON.stringify(error, null, 2)}</pre>;
 
-const trees = [
-  { id: '1', type: 'Maple' },
-  { id: '2', type: 'Oak' },
-  { id: '3', type: 'Family' },
-  { id: '4', type: 'Component' },
-];
+   return <div>
+     <img src={data.avatar_url} alt={data.loging} />
+     <div>
+       <h1>{data.login}</h1>
+       {data.name && <p>{data.name}</p>}
+       {data.location && <p>{data.location}</p>}
 
-function App() {
-
-
-  const submit = (e) => {
-    e.preventDefault();
-    alert(`${titleProps.value} sounds like ${colorProps.value}`);
-
-    reseTitle();
-    resetColor();
-
-  }
-
-    return (
-      <>
-        <h1>Trees I've Heard of</h1>
-      </>
-    );
-
+     </div>
+   </div>
 }
 
 ReactDOM.render(
-  <TreesContext.Provider value={trees}>
-    <App />
-  </TreesContext.Provider>,
+    <App login='ridwanediallo' />,
   document.getElementById('root')
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

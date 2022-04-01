@@ -1,11 +1,13 @@
 import './App.css';
 
-function App(props) {
-  return (
-    <div className="App">
+function App() {
 
-    </div>
+  return (
+    <>
+      <h1>Trees I've Heard of</h1>
+    </>
   );
 }
 
 export default App;
+
