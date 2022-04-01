@@ -1,14 +1,20 @@
-import React, {useState } from 'react';
+import React, {createContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {useInput} from './useInput'
 // import App from './App';
 
+export const TreesContext = createContext();
 
+const trees = [
+  { id: '1', type: 'Maple' },
+  { id: '2', type: 'Oak' },
+  { id: '3', type: 'Family' },
+  { id: '4', type: 'Component' },
+];
 
 function App() {
-  const [titleProps, reseTitle] = useInput('');
-  const [colorProps, resetColor] = useInput('#000000');
+
 
   const submit = (e) => {
     e.preventDefault();
@@ -21,22 +27,22 @@ function App() {
 
     return (
       <>
-        <form onSubmit={submit}>
-          <input type="text" {...titleProps} placeholder="sound..." />
-          <input type="color" {...colorProps} />
-          <button>ADD</button>
-        </form>
+        <h1>Trees I've Heard of</h1>
       </>
     );
 
 }
 
 ReactDOM.render(
-  <React.StrictMode>
+  <TreesContext.Provider value={trees}>
     <App />
-  </React.StrictMode>,
+  </TreesContext.Provider>,
   document.getElementById('root')
 );
+
+
+
+
 
 
 
